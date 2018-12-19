@@ -1,0 +1,138 @@
+public class Student {
+
+	private String name;
+	private String id;
+	private double gpa;
+
+	public Student(String name, String id, double gpa) {
+		super();
+		this.name = name;
+		this.id = id;
+		this.gpa = gpa;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public double getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", id=" + id + ", gpa=" + gpa + "]";
+	}
+}
+
+public class StudentBag {
+	private Student[] students;
+	private int nElems;
+	
+	public StudentBag(int maxSize) {
+		students = new Student[maxSize];
+		nElems = 0;
+	}
+	
+	public void add(Student student) {
+		students[nElems++] = student;
+	}
+	
+	public boolean remove(String value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if(students[i].getId().equals(value)){
+				found = true;
+				for(int j = i; j < nElems -1; j++){
+					students[j] = students[j + 1];
+				}
+				nElems --;
+				return found;
+			}
+		}
+		return found;
+	}
+	
+	public boolean find(String value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if(students[i].getId().equals(value)){
+				found = true;
+			}
+		}
+		return found;
+	}
+	public double findMax() {
+		double max = students[0].getGpa();
+		for (int i = 1; i < nElems; i++) {
+			if (max < students[i].getGpa()) {
+				max = students[i].getGpa();
+			}
+		}
+		return max;
+	}
+	
+	public double findMin() {
+		double min = students[0].getGpa();
+		for (int i = 1; i < nElems; i++) {
+			if (min > students[i].getGpa()) {
+				min = students[i].getGpa();
+			}
+		}
+		return min;
+	}
+	
+	public double findMean() {
+		double total = 0;
+		for (int i = 0; i < nElems; i++) {
+				total += students[i].getGpa();
+		}
+		return total / nElems;
+	}
+	
+	public void display(){
+		for (int i = 0; i < nElems; i++) {
+			System.out.println(students[i] + " ");
+		}
+	}
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+		StudentBag bag = new StudentBag(10);
+
+		bag.add(new Student("John", "11111", 3.2));
+		bag.add(new Student("Bobby", "22222", 4.0));
+		bag.add(new Student("Mary", "33333", 3.5));
+		bag.add(new Student("Gabe", "44444", 3.0));
+
+		System.out.println(bag.find("11111"));
+		System.out.println(bag.remove("11111"));
+		System.out.println(bag.remove("11111"));
+		System.out.println(bag.find("11111"));
+
+		System.out.println(bag.findMax());
+		System.out.println(bag.findMin());
+		System.out.println(bag.findMean());
+
+		bag.display();
+	}
+
+}
