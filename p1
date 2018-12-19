@@ -1,0 +1,104 @@
+public class IntBag {
+
+	private int[] intArray;
+	private int nElems;
+
+	public IntBag(int maxSize) {
+		intArray = new int[maxSize];
+		nElems = 0;
+	}
+
+	public void add(int value) {
+		intArray[nElems++] = value;
+	}
+
+	public boolean remove(int value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (intArray[i] == value) {
+				found = true;
+				for (int j = i; j < nElems; j++) {
+					intArray[j] = intArray[j + 1];
+				}
+				nElems--;
+				return found;
+			}
+		}
+		return found;
+	}
+
+	public boolean find(int value) {
+		boolean found = false;
+		for (int i = 0; i < nElems; i++) {
+			if (intArray[i] == value) {
+				found = true;
+			}
+		}
+		return found;
+	}
+
+	public int findMax() {
+		int max = intArray[0];
+		for (int i = 1; i < nElems; i++) {
+			if (max < intArray[i]) {
+				max = intArray[i];
+			}
+		}
+		return max;
+	}
+
+	public int findMin() {
+		int min = intArray[0];
+		for (int i = 1; i < nElems; i++) {
+			if (min > intArray[i]) {
+				min = intArray[i];
+			}
+		}
+		return min;
+	}
+
+	public double findMean() {
+		int total = 0;
+		for (int i = 0; i < nElems; i++) {
+			total += intArray[i];
+		}
+		return total * 1.0 / nElems;
+	}
+
+	public void display() {
+		for (int i = 0; i < nElems; i++) {
+			System.out.print(intArray[i] + " ");
+		}
+		System.out.println();
+	}
+}
+
+public class Demo {
+
+	public static void main(String[] args) {
+		
+		IntBag bag = new IntBag(10);
+		
+		bag.add(3);
+		bag.add(4);
+		bag.add(1);
+		bag.add(5);
+		
+		System.out.println(bag.find(4));
+		
+		System.out.println(bag.remove(4));
+		
+		System.out.println(bag.remove(4));
+		
+		System.out.println(bag.find(4));
+		
+		System.out.println(bag.findMax());
+		
+		System.out.println(bag.findMin());
+		
+		System.out.println(bag.findMean());
+		
+		bag.display();
+	}
+
+}
